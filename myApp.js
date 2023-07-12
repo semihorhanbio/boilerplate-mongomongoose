@@ -9,6 +9,13 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 let Person = require('./schemas');
 
 const createAndSavePerson = (done) => {
+  const person = new Person({name: 'Semih', age: 22, favoriteFoods:['fish', 'soup']});
+  
+  person.save(function (err, data){
+      if (err) throw err;
+      console.log(data);
+  });
+  
   done(null /*, data*/);
 };
 
