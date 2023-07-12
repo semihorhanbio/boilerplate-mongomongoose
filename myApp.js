@@ -9,30 +9,43 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 let Person = require('./schemas');
 
 const createAndSavePerson = (done) => {
-  const person = new Person({name: 'Semih', age: 22, favoriteFoods:['fish', 'soup']});
-  
-  person.save(function (err, data){
-      if (err) throw err;
-      console.log(data);
+  const person = new Person({ name: 'Semih', age: 22, favoriteFoods: ['fish', 'soup'] });
+
+  person.save(function(err, data) {
+    if (err) throw err;
+    console.log(data);
   });
-  
+
   done(null /*, data*/);
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  Person.create(arrayOfPeople, (err, data) => {
+    if (err) return done(err);
+    done(null, data);
+  });
 };
 
 const findPeopleByName = (personName, done) => {
-  done(null /*, data*/);
+  Person.find({name: personName}, (err, data) => {
+    if(err) return done(err);
+    done(null, data);
+  });
 };
 
 const findOneByFood = (food, done) => {
-  done(null /*, data*/);
+  Person.findOne({favoriteFoods: food}, (err, data) => {
+    if(err) return done(err);
+    done(null, data);    
+  })
+  
 };
 
 const findPersonById = (personId, done) => {
-  done(null /*, data*/);
+  Person.findById(personId, (err, data) => {
+    if(err) return done(err);
+    done(null, data);     
+  })
 };
 
 const findEditThenSave = (personId, done) => {
